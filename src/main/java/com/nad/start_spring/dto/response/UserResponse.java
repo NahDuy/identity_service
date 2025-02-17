@@ -1,5 +1,6 @@
 package com.nad.start_spring.entity;
 
+import com.nad.start_spring.dto.response.RoleResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,7 +26,7 @@ public class UserResponse {
      String firstName;
      String lastName;
      LocalDate dob;
-     Set<String> roles;
+     Set<RoleResponse> roles;
 
 
 }

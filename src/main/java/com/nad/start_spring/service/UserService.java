@@ -8,6 +8,7 @@ import com.nad.start_spring.enums.Role;
 import com.nad.start_spring.exception.AppException;
 import com.nad.start_spring.exception.ErrorCode;
 import com.nad.start_spring.mapper.UserMapper;
+import com.nad.start_spring.repository.RoleRepository;
 import com.nad.start_spring.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
 
     public UserResponse CreateUser(UserCreateRequest user) {
         if(userRepository.existsByUsername(user.getUsername()))
@@ -69,8 +71,11 @@ public class UserService {
     public UserResponse updateUser(UserUpdateRequest user, String id) {
         User u = userRepository.findById(id).orElseThrow(()
                 -> new RuntimeException("No find username"));
-        userMapper.updateUser(u,user);
 
+        userMapper.updateUser(u,user);
+        u.setPassword(passwordEncoder.encode(user.getPassword()));
+        var roles = roleRepository.findAllById(user.getRoles());
+        u.setRoles(new HashSet<>(roles));
         return userMapper.toUserResponse(userRepository.save(u));
     }
     public void deleteUser(String id) {
