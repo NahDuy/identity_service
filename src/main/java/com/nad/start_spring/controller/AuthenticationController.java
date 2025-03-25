@@ -1,8 +1,6 @@
 package com.nad.start_spring.controller;
 
-import com.nad.start_spring.dto.request.ApiResponse;
-import com.nad.start_spring.dto.request.AuthenticationRequest;
-import com.nad.start_spring.dto.request.IntrospectRequest;
+import com.nad.start_spring.dto.request.*;
 import com.nad.start_spring.dto.response.AuthenticationResponse;
 import com.nad.start_spring.dto.response.IntrospectResponse;
 import com.nad.start_spring.entity.UserResponse;
@@ -38,6 +36,19 @@ public class AuthenticationController {
     ApiResponse<IntrospectResponse> logIn(@RequestBody IntrospectRequest introspectRequest) throws ParseException, JOSEException {
         var result =  authenticationService.introspect(introspectRequest);
         return ApiResponse.<IntrospectResponse>builder()
+                .status(result)
+                .build();
+    }
+    @PostMapping("/logout")
+    ApiResponse<Void> logOut(@RequestBody LogoutRequest logoutRequest) throws ParseException, JOSEException {
+        authenticationService.logout(logoutRequest);
+        return ApiResponse.<Void>builder()
+                .build();
+    }
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> logOut(@RequestBody RefreshRequest refreshRequest) throws ParseException, JOSEException {
+        var result =  authenticationService.refreshToken(refreshRequest);
+        return ApiResponse.<AuthenticationResponse>builder()
                 .status(result)
                 .build();
     }
