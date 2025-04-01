@@ -26,15 +26,16 @@ public class UserController {
     UserService userService;
 
     @PostMapping
-    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreateRequest request){
+    ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreateRequest request) {
+        log.info("Creating user ...");
         return ApiResponse.<UserResponse>builder()
                 .status(userService.CreateUser(request))
                 .build();
     }
+
     @GetMapping
     ApiResponse<List<UserResponse>> getAllUsers() {
         var authetication = SecurityContextHolder.getContext().getAuthentication();
-
         log.info("authetication: {}", authetication.getName());
         authetication.getAuthorities().forEach(grantedAuthority
                 -> log.info("grantedAuthority: {}", grantedAuthority));
@@ -42,24 +43,28 @@ public class UserController {
                 .status(userService.getAllUsers())
                 .build();
     }
+
     @GetMapping("/myInfo")
-    ApiResponse<UserResponse> getMyInfo(){
+    ApiResponse<UserResponse> getMyInfo() {
         return ApiResponse.<UserResponse>builder()
                 .status(userService.myInfo())
                 .build();
     }
+
     @GetMapping("/{userId}")
-    ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId){
+    ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId) {
         return ApiResponse.<UserResponse>builder()
                 .status(userService.getUser(userId))
                 .build();
     }
+
     @PutMapping("/{userId}")
     ApiResponse<UserResponse> upadteUser(@PathVariable String userId, @RequestBody UserUpdateRequest user) {
         return ApiResponse.<UserResponse>builder()
-                .status(userService.updateUser(user,userId))
+                .status(userService.updateUser(user, userId))
                 .build();
     }
+
     @DeleteMapping("/{userId}")
     ApiResponse<String> deleteUser(@PathVariable String userId) {
         userService.deleteUser(userId);

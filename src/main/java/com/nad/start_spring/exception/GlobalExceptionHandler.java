@@ -1,6 +1,5 @@
 package com.nad.start_spring.exception;
 
-import com.beust.ah.A;
 import com.nad.start_spring.dto.request.ApiResponse;
 import jakarta.validation.ConstraintViolation;
 import org.slf4j.Logger;
