@@ -13,11 +13,13 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testng.asserts.Assertion;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -90,6 +92,27 @@ public class UserServiceTest {
         var exception = org.junit.jupiter.api.Assertions
                 .assertThrows(AppException.class,
                         () -> userService.CreateUser(request));
+
+        Assertions.assertThat(exception.getErrorCode().getCode()).isEqualTo(1002);
+    }
+    @Test
+    @WithMockUser(username = "duynguyen124")
+    void myInfo_success() throws Exception {
+        //GIVEN
+        when(repository.findByUsername(anyString())).thenReturn(Optional.of(user));
+        var reponse = userService.myInfo();
+
+        Assertions.assertThat(reponse.getFirstName()).isEqualTo("Duy");
+    }
+    @Test
+    @WithMockUser(username = "duynguyen124")
+    void myInfo_notFound() throws Exception {
+        //GIVEN
+        when(repository.findByUsername(anyString())).thenReturn(Optional.ofNullable(null));
+
+        var exception = org.junit.jupiter.api.Assertions
+                .assertThrows(AppException.class,
+                        () -> userService.myInfo());
 
         Assertions.assertThat(exception.getErrorCode().getCode()).isEqualTo(1002);
     }

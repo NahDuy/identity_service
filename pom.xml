@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -33,6 +33,11 @@
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -127,10 +132,10 @@
 				</executions>
 				<configuration>
 					<excludes>
-<!--						<exclude>com/devteria/identityservice/dto/**</exclude>-->
-<!--						<exclude>com/devteria/identityservice/entity/**</exclude>-->
-<!--						<exclude>com/devteria/identityservice/mapper/**</exclude>-->
-<!--						<exclude>com/devteria/identityservice/configuration/**</exclude>-->
+						<exclude>com/nad/start_spring/dto/**</exclude>
+						<exclude>com/nad/start_spring/entity/**</exclude>
+						<exclude>com/nad/start_spring/mapper/**</exclude>
+						<exclude>com/nad/start_spring/configuration/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
